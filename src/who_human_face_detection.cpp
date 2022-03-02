@@ -2,13 +2,13 @@
 
 #include "esp_camera.h"
 
-#include "esp-dl/include/image/dl_image.hpp"
-#include "esp-dl/include/model_zoo/human_face_detect_msr01.hpp"
-#include "esp-dl/include/model_zoo/human_face_detect_mnp01.hpp"
+#include "dl_image.hpp"
+#include "human_face_detect_msr01.hpp"
+#include "human_face_detect_mnp01.hpp"
 
 #include "who_ai_utils.hpp"
 
-#define TWO_STAGE_ON 1
+#define TWO_STAGE_ON 0
 
 #if defined(ARDUINO_ARCH_ESP32) && defined(CONFIG_ARDUHAL_ESP_LOG)
 #include "esp32-hal-log.h"
@@ -50,9 +50,9 @@ static void task_process_handler(void *arg)
 #else
                 std::list<dl::detect::result_t> &detect_results = detector.infer((uint16_t *)frame->buf, {(int)frame->height, (int)frame->width, 3});
 #endif
+                ESP_LOGI(TAG, "detect_results.size() = %d", (int)detect_results.size());
 
                 if (detect_results.size() > 0) {
-                    ESP_LOGI(TAG, "detect_results.size() = %d", (int)detect_results.size());
                     draw_detection_result((uint16_t *)frame->buf, frame->height, frame->width, detect_results);
                     get_detection_result(detect_results, result);
                     print_detection_result(detect_results);

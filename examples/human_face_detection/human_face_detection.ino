@@ -21,6 +21,9 @@
 #define CAMERA_PIN_Y8 36
 #define CAMERA_PIN_Y9 39
 
+#define SSID "**********"
+#define PASSWORD "**********"
+
 static QueueHandle_t xQueueAIFrame = NULL;
 static QueueHandle_t xQueueHttpFrame = NULL;
 
@@ -28,7 +31,7 @@ void setup() {
   Serial.begin(115200);
   Serial.setDebugOutput(true);
   Serial.println();
-  WiFi.begin("MakerStarsHall", "sunfounder");
+  WiFi.begin(SSID, PASSWORD);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);

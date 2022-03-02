@@ -1,0 +1,12 @@
+{
+    "name": "ESP Who",
+    "keywords": "ESP32, Camera, who, ov2640",
+    "description": "ESP who Arduino compatible library",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sunfounder/esp-who.git"
+    },
+    "frameworks": "arduino",
+    "platforms": "espressif32",
+    "version": "1.0.0"
+}

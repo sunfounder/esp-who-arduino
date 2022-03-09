@@ -4,7 +4,7 @@
     "description": "ESP who Arduino compatible library",
     "repository": {
         "type": "git",
-        "url": "https://github.com/sunfounder/esp-who.git"
+        "url": "https://github.com/sunfounder/esp-who-arduino.git"
     },
     "frameworks": "arduino",
     "platforms": "espressif32",

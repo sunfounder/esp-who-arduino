@@ -9,7 +9,10 @@ static QueueHandle_t xQueueFrameO = NULL;
 static void task_process_handler(void *arg) {
   while (true) {
     camera_fb_t *frame = esp_camera_fb_get();
-    if (frame) xQueueSend(xQueueFrameO, &frame, portMAX_DELAY);
+    if (frame) {
+      // xQueueSend(xQueueFrameO, &frame, portMAX_DELAY);
+      xQueueOverwrite(xQueueFrameO, &frame);
+    }
   }
 }
 

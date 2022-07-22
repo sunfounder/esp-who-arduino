@@ -10,35 +10,35 @@ static void task_process_handler(void *arg) {
   while (true) {
     camera_fb_t *frame = esp_camera_fb_get();
     if (frame) {
-      // xQueueSend(xQueueFrameO, &frame, portMAX_DELAY);
-      xQueueOverwrite(xQueueFrameO, &frame);
+      xQueueSend(xQueueFrameO, &frame, portMAX_DELAY);
+      // xQueueOverwrite(xQueueFrameO, &frame);
     }
   }
 }
 
 void register_camera(const pixformat_t pixel_fromat,
                      const framesize_t frame_size, const uint8_t fb_count,
-                     const QueueHandle_t frame_o, const int vflip,
+                     const QueueHandle_t frame_o, const int vflip, const int hflip,
                      const int d0, const int d1, const int d2, const int d3,
                      const int d4, const int d5, const int d6, const int d7,
                      const int xclk, const int pclk, const int vsync,
                      const int href, const int sda, const int scl,
                      const int pwdn, const int reset) {
 
-// #if CONFIG_CAMERA_MODULE_ESP_EYE || CONFIG_CAMERA_MODULE_ESP32_CAM_BOARD
-//   /* IO13, IO14 is designed for JTAG by default,
-//    * to use it as generalized input,
-//    * firstly declair it as pullup input */
-//   gpio_config_t conf;
-//   conf.mode = GPIO_MODE_INPUT;
-//   conf.pull_up_en = GPIO_PULLUP_ENABLE;
-//   conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
-//   conf.intr_type = GPIO_INTR_DISABLE;
-//   conf.pin_bit_mask = 1LL << 13;
-//   gpio_config(&conf);
-//   conf.pin_bit_mask = 1LL << 14;
-//   gpio_config(&conf);
-// #endif
+#if CONFIG_CAMERA_MODULE_ESP_EYE || CONFIG_CAMERA_MODULE_ESP32_CAM_BOARD
+  /* IO13, IO14 is designed for JTAG by default,
+   * to use it as generalized input,
+   * firstly declair it as pullup input */
+  gpio_config_t conf;
+  conf.mode = GPIO_MODE_INPUT;
+  conf.pull_up_en = GPIO_PULLUP_ENABLE;
+  conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
+  conf.intr_type = GPIO_INTR_DISABLE;
+  conf.pin_bit_mask = 1LL << 13;
+  gpio_config(&conf);
+  conf.pin_bit_mask = 1LL << 14;
+  gpio_config(&conf);
+#endif
 
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
@@ -77,6 +77,7 @@ void register_camera(const pixformat_t pixel_fromat,
 
   sensor_t *s = esp_camera_sensor_get();
   s->set_vflip(s, vflip);  // flip it back
+  s->set_hmirror(s, hflip);
   // initial sensors are flipped vertically and colors are a bit saturated
   if (s->id.PID == OV3660_PID) {
     s->set_brightness(s, 1);   // up the blightness just a bit

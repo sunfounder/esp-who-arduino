@@ -51,12 +51,12 @@ extern "C" {
  */
 void register_camera(const pixformat_t pixel_fromat,
                      const framesize_t frame_size, const uint8_t fb_count,
-                     const QueueHandle_t frame_o, const int vflip, const int d0,
-                     const int d1, const int d2, const int d3, const int d4,
-                     const int d5, const int d6, const int d7, const int xclk,
-                     const int pclk, const int vsync, const int href,
-                     const int sda, const int scl, const int pwdn,
-                     const int reset);
+                     const QueueHandle_t frame_o, const int vflip, const int hflip,
+                     const int d0, const int d1, const int d2, const int d3,
+                     const int d4, const int d5, const int d6, const int d7,
+                     const int xclk, const int pclk, const int vsync,
+                     const int href, const int sda, const int scl,
+                     const int pwdn, const int reset);
 
 #ifdef __cplusplus
 }

@@ -5,8 +5,8 @@
 
 #define CAMERA_VERTICAL_FLIP 1
 
-#define SSID "**********"
-#define PASSWORD "**********"
+#define SSID "ESP32_CAM_TEST"
+#define PASSWORD "12345678"
 
 static QueueHandle_t xQueueAIFrame = NULL;
 static QueueHandle_t xQueueHttpFrame = NULL;
